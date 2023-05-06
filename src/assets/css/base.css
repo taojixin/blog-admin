@@ -1,0 +1,27 @@
+/* 更改滚动条样式 */
+/* 滚动条整体部分 可以设置宽度高度等 */
+::-webkit-scrollbar
+{
+    width: 10px;
+    /* 高度：x 轴方向的滚动条高度 */
+    height: 5px;
+    background-color: transparent;
+    
+}
+/* 外出轨道 */
+::-webkit-scrollbar-track
+{
+    border-radius: 10px;
+    background-color: transparent;
+}
+/* 滚动的滑块 */
+::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    background-color: #c2d0e1;
+}
+
+h1 {
+    margin: 10px 0;
+    text-align: center;
+  }
