@@ -1,6 +1,6 @@
 <template>
   <div class="labels">
-    <h1>标 签</h1>
+    <div class="headline">标 签</div>
     <div class="show-labels">
       <div class="have">已有标签:</div>
       <div class="labels-box">
@@ -48,10 +48,8 @@ function create() {
 
 <style lang="less" scoped>
 .labels {
-  border: 1px solid blue;
 
   .show-labels {
-    border: 1px solid red;
     .have,
     .create {
       margin: 0;
@@ -64,8 +62,10 @@ function create() {
       flex-wrap: wrap;
       justify-content: space-around;
       align-items: center;
-      border-bottom: 1px solid black;
+      border-bottom: 5px dotted skyblue;
       padding: 20px;
+      background-color: white;
+      margin: 0 10px;
     }
     .newlabel {
       width: 200px;

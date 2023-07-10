@@ -2,53 +2,34 @@
   <div class="home">
     <el-container>
       <!-- 左侧 -->
-      <el-aside class="aside" width="200px">
+      <el-aside>
         <!-- 顶部头像 -->
         <div class="aside-top">
-          <img src="../assets/images/head.gif" alt="" />
-          <h1>Libertys blog</h1>
+          <img src="https://img.libertys.cn/blog/avatar.jpg" alt="" />
+          <div class="title">Liberty's Blog Admin</div>
         </div>
         <!-- 菜单 -->
         <el-menu
-          default-active="2"
-          class="el-menu-vertical-demo"
           background-color="#68bed7"
-          active-text-color="blue"
+          active-text-color="gray"
           text-color="white"
           :router="true"
           :unique-opened="true"
         >
-          <!-- 基本信息 -->
-          <el-sub-menu index="baseMessage">
-            <template #title>
-              <span>基本信息</span>
-            </template>
-            <el-menu-item index="welcome">首页</el-menu-item>
-          </el-sub-menu>
-          <!-- 笔记 -->
-          <el-sub-menu index="article">
-            <template #title>
-              <span>笔记</span>
-            </template>
-            <el-menu-item index="labels">标签信息</el-menu-item>
-            <el-menu-item index="articlecreate">创建文章</el-menu-item>
-          </el-sub-menu>
-          <!-- 留言 -->
-          <el-sub-menu index="note">
-            <template #title>
-              <span>留言</span>
-            </template>
-            <el-menu-item index="a">查看留言</el-menu-item>
-            <el-menu-item index="e">管理留言</el-menu-item>
-          </el-sub-menu>
-          <!-- 图片管理 -->
-          <el-sub-menu index="image">
-            <template #title>
-              <span>图片管理</span>
-            </template>
-            <el-menu-item index="imagesshow">图片列表</el-menu-item>
-            <el-menu-item index="imageupload">上传图片</el-menu-item>
-          </el-sub-menu>
+          <template v-for="item in menuList" :key="item.id">
+            <el-menu-item :index="item.path">
+              <template #title>
+                <i class="iconfont" :class="item.icon"></i>
+                <span>{{ item.text }}</span>
+              </template>
+              <!-- 子菜单 -->
+              <!-- <template v-for="child in item.menuItem" :key="child.id">
+                <el-menu-item :index="child.path">
+                  {{ child.text }}
+                </el-menu-item>
+              </template> -->
+            </el-menu-item>
+          </template>
         </el-menu>
       </el-aside>
 
@@ -60,36 +41,103 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const menuList = [
+  {
+    id: 1,
+    text: "基本信息",
+    path: "welcome",
+    icon: "icon-shouye"
+  },
+  {
+    id: 2,
+    text: "文章",
+    path: "articlelist",
+    icon: "icon-liuyan"
+  },
+  {
+    id: 3,
+    text: "留言",
+    path: "message",
+    icon: "icon-pinglun"
+  },
+  {
+    id: 4,
+    text: "日常",
+    path: "dailylist",
+    icon: "icon-jibenxinxi"
+  },
+  {
+    id: 5,
+    text: "相册",
+    path: "imagesshow",
+    icon: "icon-tupian",
+    menuItem: [
+      { id: 1, path: "imagesshow", text: "图片列表" },
+      { id: 2, path: "imageupload", text: "上传图片" },
+    ],
+  },
+  {
+    id: 6,
+    text: "时间轴",
+    path: "time",
+    icon: "icon-shijianzhou",
+  },
+  {
+    id: 7,
+    text: "统计",
+    path: "total",
+    icon: "icon-tongji",
+    menuItem: [
+      { id: 1, path: "total", text: "基本统计" },
+    ],
+  },
+];
+</script>
 
 <style lang="less" scoped>
 .home {
   height: 100vh;
+  width: 80vw;
+  margin: 0 auto;
   box-sizing: border-box;
-  border: 1px solid pink;
-  overflow: hidden;
+  background-color: white;
+  // overflow: hidden;
 
   .el-container {
     display: flex;
-    .aside {
+    box-sizing: border-box;
+    .el-aside {
       width: 200px;
-      height: calc(100vh - 20px);
-      margin: 10px 10px;
-      border: 1px solid gray;
-
+      margin: 30px 10px;
+      background-color: skyblue;
       .aside-top {
-        border: 1px solid black;
         height: 100px;
         position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
         img {
-          width: 100px;
-          height: 100px;
-          border: 1px solid black;
+          width: 60px;
+          height: 60px;
+          border-radius: 60px;
+          border: 1px solid white;
+        }
+        .title {
+          font-size: 14px;
+          color: white;
+          font-weight: bold;
         }
       }
 
       .el-sub-menu {
         border: 1px solid gray;
+        i {
+          margin-right: 5px;
+          font-size: 24px;
+        }
       }
     }
 
@@ -98,8 +146,7 @@
       height: 100vh;
       padding: 0;
       margin: 0 10px;
-      // border: 1px solid purple;
-      overflow-x: scroll;
+      background-color: rgb(252, 246, 246);
     }
   }
 }

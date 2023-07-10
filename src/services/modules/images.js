@@ -8,8 +8,30 @@ export function uploadImage() {
 }
 
 // 获取图片标签信息
-export function getImgLabels() {
+export function getPhotoAlbum() {
   return request.get({
-    url: "/file/imglabels"
-  })
+    url: "/file/phonealbum",
+  });
+}
+
+// 获取所有图片
+export function getAllPhoto() {
+  return request.get({
+    url: "/file/getallphone",
+  });
+}
+
+// 获取所有阿里云图片列表
+export function getAllPhotos() {
+  return request.get({
+    url: "/alioss/getallphoto",
+  });
+}
+
+// 删除某个图片
+export function delPhoto(imgObjName) {
+  return request.post({
+    url: "/alioss/deletePhoto",
+    data: { imgObjName },
+  });
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="welcome">
-    welcome
+    <h1>欢迎来到Libertys博客的后台管理系统</h1>
 
   </div>
 </template>

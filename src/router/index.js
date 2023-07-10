@@ -26,12 +26,20 @@ const router = createRouter({
         },
         // 文章相关
         {
+          path: "/articlelist",
+          component: () => import("../views/articles/article-list.vue"),
+        },
+        {
           path: "/articlecreate",
           component: () => import("../views/articles/article-create.vue"),
         },
         {
           path: "/labels",
           component: () => import("../views/articles/labels.vue"),
+        },
+        {
+          path: "/articlemodify/:articleId",
+          component: () => import("../views/articles/article-modify.vue")
         },
         // 图片相关
         {
@@ -42,6 +50,20 @@ const router = createRouter({
           path: "/imagesshow",
           component: () => import("../views/images/images-show.vue"),
         },
+        // 生活相关
+        {
+          path: "/time",
+          component: () => import("../views/daily/time.vue")
+        },
+        {
+          path: "/dailylist",
+          component: () => import("../views/daily/daily-list.vue")
+        },
+        // 留言
+        {
+          path: "/message",
+          component: () => import("../views/message/message.vue")
+        }
       ],
     },
   ],

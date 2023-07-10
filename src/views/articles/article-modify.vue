@@ -1,5 +1,5 @@
 <template>
-  <div class="article-create">
+  <div class="article-modify" v-loading="loading">
     <div class="headline">文章编辑</div>
     <div class="notes-container">
       <el-form label-width="120px" :model="formValue">
@@ -29,19 +29,46 @@
         </div>
         <div class="right markdown-body" v-html="htmlValue"></div>
       </div>
-      <el-button type="primary" @click="submitArticle">提交</el-button>
+      <div class="btn">
+        <el-button type="info" size="large" @click="cancelModif">取消</el-button>
+        <el-button type="primary" size="large" @click="modifyArticle">修改</el-button>
+        
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref, watch } from "vue";
+import { ElMessage } from "element-plus";
+import { useRoute, useRouter } from "vue-router";
 import { marked } from "marked";
 import hljs from "highlight.js";
 
-import { getLabels, createArticle } from "../../services/index";
-import { ElMessage } from "element-plus";
+import {
+  getLabels,
+  getArticleDetail,
+  modifyArticleSer,
+} from "../../services/index";
 
+const router = useRouter();
+const route = useRoute();
+
+// 获取数据
+const loading = ref(true)
+const articleId = ref(-1);
+articleId.value = route.params.articleId;
+getArticleDetail(articleId.value).then((res) => {
+  textValue.value = res.data.articleDetail.content;
+  formValue.title = res.data.articleDetail.title;
+  formValue.description = res.data.articleDetail.description;
+  labelArr.value = res.data.articleDetail.labels.map((item) => {
+    return item.id;
+  });
+  loading.value = false
+});
+
+// markdown转html
 marked.setOptions({
   highlight: function (code, lang) {
     return hljs.highlightAuto(code).value;
@@ -53,34 +80,44 @@ watch(textValue, () => {
   htmlValue = marked.parse(textValue.value);
 });
 
+// 表单数据
 const formValue = reactive({
   title: "",
-  description: ""
+  description: "",
 });
-const labelArr = ref([])
-
+const labelArr = ref([]);
+// 获取标签信息
 let labels = ref([]);
 getLabels().then((res) => {
   labels.value = res.data.result;
 });
 
-function submitArticle() {
-  createArticle(formValue.title, textValue.value,formValue.description, labelArr.value).then(
-    (res) => {
-      if (res.code === 0) {
-        console.log("创建成功");
-        ElMessage({ type: "success", message: "创建成功！" });
-      } else {
-        console.log(res);
-        ElMessage({ type: "error", message: "创建失败！请检查参数是否正确！" });
-      }
+// 修改
+function modifyArticle() {
+  modifyArticleSer(
+    articleId.value,
+    formValue.title,
+    textValue.value,
+    formValue.description,
+    labelArr.value
+  ).then(async (res) => {
+    if (res.code === 0) {
+      ElMessage({ type: "success", message: "修改成功！" });
+      router.go(-1);
+    } else {
+      ElMessage({ type: "error", message: "修改失败" });
     }
-  );
+  });
+}
+// 取消修改
+function cancelModif() {
+  router.go(-1);
+  ElMessage({ type: "info", message: "取消修改！" });
 }
 </script>
 
 <style lang="less" scoped>
-.article-create {
+.article-modify {
   .notes-container {
     position: relative;
     .box {
@@ -117,14 +154,11 @@ function submitArticle() {
         min-height: 600px;
       }
     }
-    .el-button {
-      width: 100px;
-      position: absolute;
-      // bottom: 10px;
-      margin: 20px 0;
-      padding: 20px 0;
-      left: 50%;
-      transform: translate(-50%, 0);
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
     }
   }
 }

@@ -65,6 +65,7 @@ const loginClick = function (formRef) {
   formRef.validate((valid) => {
     if (valid) {
       login(formValue.name, formValue.password).then((res) => {
+        console.log(res)
         localStorage.setItem("adminToken", res.data.token)
         ElMessage({
           type: "success",
