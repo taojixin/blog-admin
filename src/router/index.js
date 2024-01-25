@@ -39,7 +39,7 @@ const router = createRouter({
         },
         {
           path: "/articlemodify/:articleId",
-          component: () => import("../views/articles/article-modify.vue")
+          component: () => import("../views/articles/article-modify.vue"),
         },
         // 图片相关
         {
@@ -53,33 +53,33 @@ const router = createRouter({
         // 生活相关
         {
           path: "/time",
-          component: () => import("../views/daily/time.vue")
+          component: () => import("../views/daily/time.vue"),
         },
         {
           path: "/dailylist",
-          component: () => import("../views/daily/daily-list.vue")
+          component: () => import("../views/daily/daily-list.vue"),
         },
         // 留言
         {
           path: "/message",
-          component: () => import("../views/message/message.vue")
-        }
+          component: () => import("../views/message/message.vue"),
+        },
       ],
     },
   ],
 });
 
 router.beforeEach((to, from) => {
-  if (to.fullPath !== "/login") {
-    verifyToken().then((res) => {
-      if (res.code !== 0) {
-        ElMessage.error("登录信息过期，请重新登录！");
-        router.push("/login");
-        return false;
-      }
-      return true;
-    });
-  }
+  // if (to.fullPath !== "/login") {
+  //   verifyToken().then((res) => {
+  //     if (res.code !== 0) {
+  //       ElMessage.error("登录信息过期，请重新登录！");
+  //       router.push("/login");
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+  // }
   return true;
 });
 

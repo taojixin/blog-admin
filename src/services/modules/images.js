@@ -24,14 +24,14 @@ export function getAllPhoto() {
 // 获取所有阿里云图片列表
 export function getAllPhotos() {
   return request.get({
-    url: "/alioss/getallphoto",
+    url: "/images",
   });
 }
 
 // 删除某个图片
 export function delPhoto(imgObjName) {
   return request.post({
-    url: "/alioss/deletePhoto",
+    url: "/image/delete",
     data: { imgObjName },
   });
 }
